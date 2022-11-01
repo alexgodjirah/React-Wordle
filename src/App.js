@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Wordle from "./components/Wordle";
 
 function App() {
   const [solution, setSolution] = useState(null);
@@ -23,6 +24,9 @@ function App() {
         solution
           && <div>Solution is: {solution}</div>
       }
+
+      {/* Wordle component accept solution as props. */}
+      <Wordle solution={solution} />
     </div>
   );
 }
