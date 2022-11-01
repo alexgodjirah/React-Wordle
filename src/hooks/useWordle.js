@@ -12,7 +12,28 @@ const useWordle = (solution) => {
     // Format the guess into an array of objects (with letter and color as value).
     // e.g. [{ key: 'a', color: 'yellow' }].
     const formatGuess = () => {
+        let solutionArray = [...solution]; // Spread the solution into an array of characters. 
+        let guessArray = [...currentGuess].map(e => ( // Spread the guess into an array of character.
+            { letter: e, color: 'grey' } // Create an object from each array of characters with letter and color as the key and each letter (from currentGuess) and 'grey' as default value.
+        ));
 
+        // Find the green letter
+        guessArray.forEach((e, i) => {
+            if (solutionArray[i] === e.letter) {
+                guessArray[i].color = 'green';
+                solutionArray[i] = null; // To prevent double match.
+            }
+        });
+
+        // Find the yellow letter
+        guessArray.forEach((e, i) => {
+            if (solutionArray.includes(e.letter) && e.color !== 'green') {
+                guessArray[i].color = 'yellow';
+                solutionArray[solutionArray.indexOf(e.letter)] = null;
+            }
+        });
+
+        return guessArray;
     };
 
     // Add the new guess to the guessList state.
@@ -46,6 +67,8 @@ const useWordle = (solution) => {
             }
 
             console.log(currentGuess);
+            const format = formatGuess();
+            console.log(format);
         }
 
         

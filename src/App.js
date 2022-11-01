@@ -22,11 +22,10 @@ function App() {
 
       {
         solution
-          && <div>Solution is: {solution}</div>
+        // Wordle component accept solution as props.
+          && <Wordle solution={solution} />
       }
 
-      {/* Wordle component accept solution as props. */}
-      <Wordle solution={solution} />
     </div>
   );
 }
