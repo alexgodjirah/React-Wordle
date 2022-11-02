@@ -9,9 +9,12 @@ export default function Grid(props) {
         <div>
             Grid
             {
-                guessList.map((guess, i) => (
-                    <Row key={i} guess={guess} />
-                ))
+                guessList.map((guess, i) => {
+                    if (turn === i) { // To put every currentGuess into separate according to the turn and index for each guess. 
+                        return <Row key={i} currentGuess={currentGuess} />
+                    }
+                    return <Row key={i} guess={guess} /> // This is to create "history" for each entered guess. 
+                })
             }
         </div>
     )
