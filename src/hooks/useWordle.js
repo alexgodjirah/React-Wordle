@@ -4,7 +4,7 @@ import { useState } from 'react';
 const useWordle = (solution) => {
     const [turn, setTurn] = useState(0); // To set the turn.
     const [currentGuess, setCurrentGuess] = useState(''); // To track user input. Updated each time handleKeyUp() function is called.
-    const [guessList, setGuessList] = useState([...Array(6)]); // To track each guess the user inputted in an array of object (with letter and color as key). Updated each time new guess entered and formatted by formatGuess() function.
+    const [guessList, setGuessList] = useState([...Array(5)]); // To track each guess the user inputted in an array of object (with letter and color as key). Updated each time new guess entered and formatted by formatGuess() function.
     const [guessHistory, setGuessHistory] = useState([]); // To tack each guess the user inputted in an array of string. Used to make sure the user doesn't input the same guess.
     const [isCorrect, setIsCorrect] = useState(false); // To track the answer 
 
@@ -36,11 +36,32 @@ const useWordle = (solution) => {
         return guessArray;
     };
 
-    // Add the new guess to the guessList state.
+    // Add the new guess to the guessList state. Accept formatted guess as the argument. 
     // Update isCorrect state if the guess has the same value with solution.
     // Add one to the turn state.
-    const addNewGuess = () => {
+    const addNewGuess = (formattedGuess) => {
+        // If the guess is correct
+        if (currentGuess === solution) {
+            setIsCorrect(true);
+        }
 
+        // Add the currentGuess to the guessList state
+        setGuessList(prevGuess => {
+            let newGuessList = [...prevGuess];
+            newGuessList[turn] = formattedGuess;
+            return newGuessList;
+        });
+
+        // Add turn
+        setTurn(prevTurn => prevTurn + 1);
+
+        // Add the currentGuess to the guessHistory state
+        setGuessHistory(prevGuess => {
+            return [...prevGuess, currentGuess];
+        });
+
+        // Clear currentGuess state
+        setCurrentGuess('');
     };
 
     // Handle keyup event and track the currentGuess state. Accept key as arguments. 
@@ -67,8 +88,10 @@ const useWordle = (solution) => {
             }
 
             console.log(currentGuess);
+            console.log(guessList, guessHistory, turn);
             const format = formatGuess();
             console.log(format);
+            addNewGuess(format);
         }
 
         
