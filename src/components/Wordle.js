@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import useWordle from '../hooks/useWordle'
+import Grid from './Grid';
 
 // Wordle component is created to contains the usage of useWordle hooks and show the game. 
 export default function Wordle({ solution }) {
-    const { handleKeyUp, currentGuess } = useWordle(solution);
+    const { handleKeyUp, currentGuess, turn, guessList, isCorrect } = useWordle(solution);
     useEffect(() => {
         window.addEventListener('keyup', handleKeyUp);
 
@@ -20,6 +21,10 @@ export default function Wordle({ solution }) {
 
         <div>
             Current Guess: {currentGuess}    
+        </div>
+
+        <div>
+            <Grid guessList={guessList} currentGuess={currentGuess} turn={turn} />
         </div>
     </div>
   )

@@ -69,6 +69,10 @@ const useWordle = (solution) => {
     const handleKeyUp = ({ key }) => {
         // Submitting the guess
         if (key === 'Enter') {
+            if (currentGuess === solution) {
+                setIsCorrect(true);
+            }
+            
             // Only add guess if turn is less than and equals to 5
             if (turn > 5) {
                 console.log('You have used all of your turn.');

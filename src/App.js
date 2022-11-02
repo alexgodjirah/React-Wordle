@@ -23,6 +23,7 @@ function App() {
       {
         solution
         // Wordle component accept solution as props.
+        // App -> Worlde -> Grid -> Row
           && <Wordle solution={solution} />
       }
 
