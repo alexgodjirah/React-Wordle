@@ -24,7 +24,7 @@ export default function Row(props) {
             <div className='row current'>
                 {
                     letters.map((char, i) => {
-                        return <div key={i}>{char}</div>
+                        return <div className='filled' key={i}>{char}</div>
                     })
                 }
 
