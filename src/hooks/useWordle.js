@@ -4,7 +4,7 @@ import { useState } from 'react';
 const useWordle = (solution) => {
     const [turn, setTurn] = useState(0); // To set the turn.
     const [currentGuess, setCurrentGuess] = useState(''); // To track user input. Updated each time handleKeyUp() function is called.
-    const [guessList, setGuessList] = useState([...Array(5)]); // To track each guess the user inputted in an array of object (with letter and color as key). Updated each time new guess entered and formatted by formatGuess() function.
+    const [guessList, setGuessList] = useState([...Array(6)]); // To track each guess the user inputted in an array of object (with letter and color as key). Updated each time new guess entered and formatted by formatGuess() function.
     const [guessHistory, setGuessHistory] = useState([]); // To tack each guess the user inputted in an array of string. Used to make sure the user doesn't input the same guess.
     const [isCorrect, setIsCorrect] = useState(false); // To track the answer 
     const [usedKeys, setUsedKeys] = useState({}); // Keep tracks of all the keys we use and what the color should be (letter as key, color as value). {a: 'green', b: 'yellow', c: 'grey'}

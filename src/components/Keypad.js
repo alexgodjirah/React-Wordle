@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 export default function Keypad(props) {
     const { usedKeys } = props;
     const [letters, setLetters] = useState(null);
-    console.log(usedKeys);
 
     useEffect(() => {
         fetch('http://localhost:3001/letters')

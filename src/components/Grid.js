@@ -7,7 +7,6 @@ export default function Grid(props) {
 
     return (
         <div>
-            Grid
             {
                 guessList.map((guess, i) => {
                     if (turn === i) { // To put every currentGuess into separate according to the turn and index for each guess. 
