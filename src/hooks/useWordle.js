@@ -7,6 +7,7 @@ const useWordle = (solution) => {
     const [guessList, setGuessList] = useState([...Array(5)]); // To track each guess the user inputted in an array of object (with letter and color as key). Updated each time new guess entered and formatted by formatGuess() function.
     const [guessHistory, setGuessHistory] = useState([]); // To tack each guess the user inputted in an array of string. Used to make sure the user doesn't input the same guess.
     const [isCorrect, setIsCorrect] = useState(false); // To track the answer 
+    const [usedKeys, setUsedKeys] = useState({}); // Keep tracks of all the keys we use and what the color should be (letter as key, color as value). {a: 'green', b: 'yellow', c: 'grey'}
 
 
     // Format the guess into an array of objects (with letter and color as value).
@@ -60,6 +61,31 @@ const useWordle = (solution) => {
             return [...prevGuess, currentGuess];
         });
 
+        setUsedKeys(prevKeys => {
+            let newKeys = {...prevKeys};
+            
+            formattedGuess.forEach((l) => {
+                const currentColor = newKeys[l.letter];
+
+                if (l.color === 'green') {
+                    newKeys[l.letter] = 'green';
+                    return;
+                }
+
+                if (l.color === 'yellow' && currentColor !== 'green') {
+                    newKeys[l.letter] = 'yellow';
+                    return;
+                }
+
+                if (l.color === 'grey' && currentColor !== 'green' && currentColor !== 'yellow') {
+                    newKeys[l.letter] = 'grey';
+                    return;
+                }
+
+            }); 
+            return newKeys;
+        })
+
         // Clear currentGuess state
         setCurrentGuess('');
     };
@@ -91,10 +117,7 @@ const useWordle = (solution) => {
                 return;
             }
 
-            console.log(currentGuess);
-            console.log(guessList, guessHistory, turn);
             const format = formatGuess();
-            console.log(format);
             addNewGuess(format);
         }
 
@@ -123,7 +146,7 @@ const useWordle = (solution) => {
 
     // What useWordle() hook will return?
     return {
-        turn, currentGuess, guessList, isCorrect, handleKeyUp
+        turn, currentGuess, guessList, isCorrect, usedKeys, handleKeyUp, 
     }
 }
 
